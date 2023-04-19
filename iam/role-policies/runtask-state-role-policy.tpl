@@ -19,7 +19,8 @@
                 "logs:DeleteLogDelivery",
                 "logs:ListLogDeliveries",
                 "logs:PutResourcePolicy",
-                "logs:DescribeResourcePolicies"
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeLogGroups"
             ],
             "Resource": [
                 "*"
@@ -29,11 +30,10 @@
             "Effect": "Allow",
             "Action": [
                 "logs:PutLogEvents",
-                "logs:CreateLogStream",
-                "logs:DescribeLogGroups"
+                "logs:CreateLogStream"
             ],
             "Resource": [
-                "arn:${data_aws_partition}:logs:${data_aws_region}:${data_aws_account_id}:log-group:/aws/state/${var_name_prefix}-runtask-statemachine/*"
+                "arn:${data_aws_partition}:logs:${data_aws_region}:${data_aws_account_id}:log-group:/aws/state/${var_name_prefix}-runtask-statemachine*"
             ]
         },
         {

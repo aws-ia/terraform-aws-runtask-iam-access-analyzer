@@ -1,6 +1,7 @@
 resource "random_uuid" "runtask_hmac" {}
 
 resource "aws_secretsmanager_secret" "runtask_hmac" {
+  #checkov:skip=CKV2_AWS_57:run terraform apply to rotate hmac
   name                    = "${var.name_prefix}-runtask-hmac"
   recovery_window_in_days = var.recovery_window
   kms_key_id              = aws_kms_key.runtask_key.arn
@@ -16,6 +17,7 @@ resource "random_uuid" "runtask_cloudfront" {
 }
 
 resource "aws_secretsmanager_secret" "runtask_cloudfront" {
+  #checkov:skip=CKV2_AWS_57:run terraform apply to rotate cloudfront secret
   count                   = local.waf_deployment
   name                    = "${var.name_prefix}-runtask_cloudfront"
   recovery_window_in_days = var.recovery_window

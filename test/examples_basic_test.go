@@ -9,11 +9,12 @@ import (
 func TestExamplesBasic(t *testing.T) {
 
 	terraformOptions := &terraform.Options{
-		TerraformDir: "../examples/basic",
-		// Vars: map[string]interface{}{
-		// 	"myvar":     "test",
-		// 	"mylistvar": []string{"list_item_1"},
-		// },
+		Lock:         true, // Required for TFC with local execution
+		TerraformDir: "../examples/module_workspace",
+		Vars: map[string]interface{}{
+			"tfc_org":          "wellsiau-org",
+			"workspace_prefix": "ia2",
+		},
 	}
 
 	defer terraform.Destroy(t, terraformOptions)
