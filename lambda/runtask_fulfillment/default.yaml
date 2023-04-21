@@ -1,0 +1,157 @@
+# Config map consisting the Terraform plan IAM policy attribute name and IAM Access Analyzer policy type
+iamConfigMap:
+  aws_iam_group_policy: 
+    attribute: policy
+    type: IDENTITY_POLICY
+  aws_iam_policy: 
+    attribute: policy
+    type: IDENTITY_POLICY
+  aws_iam_role: 
+    - attribute: assume_role_policy
+      type: RESOURCE_POLICY
+    - attribute: inline_policy.policy
+      type: IDENTITY_POLICY
+  aws_iam_role_policy: 
+    attribute: policy
+    type: IDENTITY_POLICY
+  aws_iam_user_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_api_gateway_rest_api: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_api_gateway_rest_api_policy:
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_backup_vault_policy:
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_cloudwatch_event_bus_policy:
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_cloudwatch_log_destination_policy:
+    attribute: access_policy
+    type: RESOURCE_POLICY
+  aws_cloudwatch_log_resource_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_codeartifact_domain_permissions_policy: 
+    attribute: policy_document
+    type: RESOURCE_POLICY
+  aws_codeartifact_repository_permissions_policy: 
+    attribute: policy_document
+    type: RESOURCE_POLICY
+  aws_codebuild_resource_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_ecr_registry_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_ecr_repository_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_ecrpublic_repository_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_efs_file_system_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_elasticsearch_domain: 
+    attribute: access_policies
+    type: RESOURCE_POLICY
+  aws_elasticsearch_domain_policy: 
+    attribute: access_policies
+    type: RESOURCE_POLICY
+  aws_glacier_vault: 
+    attribute: access_policy
+    type: RESOURCE_POLICY
+  aws_glacier_vault_lock: 
+    attribute: access_policy
+    type: RESOURCE_POLICY
+  aws_glue_resource_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_iot_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_kms_external_key: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_kms_key: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_kms_replica_external_key: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_kms_replica_key: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_lambda_layer_version_permission: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_media_store_container_policy:
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_networkfirewall_resource_policy:
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_organizations_policy: 
+    attribute: content
+    type: SERVICE_CONTROL_POLICY
+  aws_s3_access_point: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_s3_bucket: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_s3_bucket_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_s3control_access_point_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_s3control_bucket_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_s3control_multi_region_access_point_policy: 
+    attribute: details.policy
+    type: RESOURCE_POLICY
+  aws_s3control_object_lambda_access_point_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_ses_identity_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_sns_topic: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_sns_topic_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_sqs_queue: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_sqs_queue_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_ssoadmin_permission_set_inline_policy: 
+    attribute: inline_policy
+    type: RESOURCE_POLICY
+  aws_sagemaker_model_package_group_policy: 
+    attribute: resource_policy
+    type: RESOURCE_POLICY
+  aws_secretsmanager_secret: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_secretsmanager_secret_policy: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_transfer_access: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_transfer_user: 
+    attribute: policy
+    type: RESOURCE_POLICY
+  aws_vpc_endpoint: 
+    attribute: policy
+    type: RESOURCE_POLICY
