@@ -5,6 +5,8 @@
 PROJECT_PATH=${BASE_PATH}/project
 PROJECT_TYPE_PATH=${BASE_PATH}/projecttype
 
+echo "Starting Funtional Tests"
+
 echo "Starting Functional Tests"
 
 cd ${PROJECT_PATH}
@@ -37,10 +39,5 @@ go mod init github.com/aws-ia/terraform-project-ephemeral
 go mod tidy
 go install github.com/gruntwork-io/terratest/modules/terraform
 go test -timeout 45m
-
-#********** CLEANUP *************
-echo "Cleaning up all temp files and artifacts"
-cd ${PROJECT_PATH}
-make clean
 
 echo "End of Functional Tests"
