@@ -7,8 +7,6 @@ PROJECT_TYPE_PATH=${BASE_PATH}/projecttype
 
 echo "Starting Static Tests"
 
-echo "Starting Static Tests"
-
 cd ${PROJECT_PATH}
 terraform init
 terraform validate
