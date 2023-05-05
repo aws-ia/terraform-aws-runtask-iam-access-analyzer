@@ -78,7 +78,10 @@ First step is to deploy the module into dedicated Terraform Cloud workspace. The
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_tfc_org"></a> [tfc\_org](#input\_tfc\_org) | n/a | `string` | n/a | yes |
+| <a name="input_workspace_prefix"></a> [workspace\_prefix](#input\_workspace\_prefix) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
