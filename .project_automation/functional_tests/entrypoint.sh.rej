@@ -1,0 +1,6 @@
+diff a/.project_automation/functional_tests/entrypoint.sh b/.project_automation/functional_tests/entrypoint.sh	(rejected hunks)
+@@ -7,3 +7,3 @@ PROJECT_TYPE_PATH=${BASE_PATH}/projecttype
+ 
+-echo "Starting Funtional Tests"
++echo "Starting Functional Tests"
+ 
