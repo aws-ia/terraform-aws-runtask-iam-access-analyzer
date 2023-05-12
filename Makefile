@@ -18,3 +18,4 @@ clean:
 	rm -f ./test/go.sum
 	rm -f tf.json
 	rm -f tf.plan
+	rm -f *.tfvars
