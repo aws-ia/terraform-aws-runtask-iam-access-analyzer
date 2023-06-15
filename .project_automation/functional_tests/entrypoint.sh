@@ -35,7 +35,7 @@ echo "Running Checkov Analysis on terraform plan"
 terraform init
 terraform plan -out tf.plan -var-file functional_test.tfvars
 terraform show -json tf.plan  > tf.json 
-checkov 
+checkov --config-file ${PROJECT_PATH}/.config/checkov.yml
 
 # #********** Terratest execution **********
 echo "Running Terratest"
