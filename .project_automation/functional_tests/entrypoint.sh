@@ -9,7 +9,6 @@ echo "Starting Functional Tests"
 
 cd ${PROJECT_PATH}
 
-<<<<<<< before updating
 #********** TFC Env Vars *************
 export AWS_DEFAULT_REGION=us-east-1
 export TFE_TOKEN=`aws secretsmanager get-secret-value --secret-id abp/tfc/token | jq -r ".SecretString"`
@@ -28,20 +27,7 @@ aws ssm get-parameter \
   --output "text" \
   --region "us-east-1" >> functional_test.tfvars
 
-#********** Checkov Analysis *************
-echo "Running Checkov Analysis on root module"
-checkov --directory . --skip-path examples --framework terraform
-
-echo "Running Checkov Analysis on terraform plan"
-terraform init
-terraform plan -out tf.plan -var-file functional_test.tfvars
-terraform show -json tf.plan  > tf.json 
-checkov 
-
-# #********** Terratest execution **********
-=======
 #********** Terratest execution **********
->>>>>>> after updating
 echo "Running Terratest"
 export GOPROXY=https://goproxy.io,direct
 cd test
