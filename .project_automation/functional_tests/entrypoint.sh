@@ -21,21 +21,28 @@ make all
 #********** Get tfvars from SSM *************
 echo "Get *.tfvars from SSM parameter"
 aws ssm get-parameter \
-  --name "/abp/tfc/functional/tfvars" \
+  --name "/abp/tfc/functional/tfc_org/terraform_test.tfvars" \
   --with-decryption \
   --query "Parameter.Value" \
   --output "text" \
-  --region "us-east-1" >> functional_test.tfvars
+  --region "us-east-1" >> ./tests/terraform.auto.tfvars
 
-#********** Terratest execution **********
-echo "Running Terratest"
-export GOPROXY=https://goproxy.io,direct
-cd test
-rm -f go.mod
-go mod init github.com/aws-ia/terraform-project-ephemeral
-go mod tidy
-go install github.com/gruntwork-io/terratest/modules/terraform
-go test -timeout 45m
+#********** Terraform Test execution **********
+echo "Running Terraform test"
+cd ${PROJECT_PATH}/tests/setup
+terraform init
+cd ${PROJECT_PATH}/tests/validate
+terraform init
+cd ${PROJECT_PATH}
+terraform init
+if TF_TEST="$(terraform test)"
+then
+    echo "$TF_TEST"
+    echo "Terraform Test Successfull"
+else
+    echo "$TF_TEST"
+    echo "Terraform Test Failed"
+fi
 
 #********** CLEANUP *************
 echo "Cleaning up all temp files and artifacts"

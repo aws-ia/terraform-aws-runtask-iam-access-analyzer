@@ -38,7 +38,15 @@ fi
 
 #********** Checkov Analysis *************
 echo "Running Checkov Analysis"
-checkov --config-file ${PROJECT_PATH}/.config/.checkov.yml
+# checkov --config-file ${PROJECT_PATH}/.config/.checkov.yml
+# if [ $? -eq 0 ]
+if CHECKOV="$(checkov --config-file ${PROJECT_PATH}/.config/.checkov.yml)"
+then
+    echo "Success - Checkov found no security issues!\n"
+else
+    echo "Failure - Checkov found security issues!"
+    exit 1
+fi
 
 #********** Markdown Lint **************
 echo 'Starting markdown lint'
