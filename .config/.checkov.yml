@@ -8,15 +8,15 @@ skip-check:
 - CKV2_GCP*
 - CKV_AZURE*
 - CKV2_AZURE*
-- CKV_TF_1 # default to Terraform registry instead of Git
-- CKV_AWS_109 # the given example intentionally violates this rule
-- CKV_AWS_111 # the given example intentionally violates this rule
-- CKV_AWS_356 # the given example intentionally violates this rule
-- CKV_AWS_7 # not required for this example
-- CKV_AWS_158 # not required for this example
-- CKV_AWS_66 # not required for this example
-- CKV_AWS_338 # not required for this example
-- CKV2_AWS_31 # false alarm
+# - CKV_TF_1 # default to Terraform registry instead of Git
+# - CKV_AWS_109 # the given example intentionally violates this rule
+# - CKV_AWS_111 # the given example intentionally violates this rule
+# - CKV_AWS_356 # the given example intentionally violates this rule
+# - CKV_AWS_7 # not required for this example
+# - CKV_AWS_158 # not required for this example
+# - CKV_AWS_66 # not required for this example
+# - CKV_AWS_338 # not required for this example
+# - CKV2_AWS_31 # false alarm
 summary-position: bottom
 output: 'cli'
 compact: True
