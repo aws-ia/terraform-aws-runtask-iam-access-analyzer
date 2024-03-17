@@ -43,7 +43,6 @@ else
     EXIT_CODE=1
 fi
 
-
 #********** Post-entrypoint helper *************
 post_entrypoint
 
