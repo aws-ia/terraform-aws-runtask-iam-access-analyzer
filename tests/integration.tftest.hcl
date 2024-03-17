@@ -40,6 +40,7 @@ run "validate_workspace" {
   }
 }
 
+# Warning : unable to confirm if this test run effectively, see https://discuss.hashicorp.com/t/terraform-test-with-tfc-workspaces/63351
 run "validate_access_analyzer" {
   # run apply on the test workspace to validate results
   command = plan 
