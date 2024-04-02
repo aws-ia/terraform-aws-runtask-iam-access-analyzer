@@ -20,3 +20,5 @@ else
 fi
 
 echo "End of Functional Tests"
+
+# Test
