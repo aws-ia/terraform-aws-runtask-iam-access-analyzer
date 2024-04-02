@@ -43,14 +43,8 @@ else
     EXIT_CODE=1
 fi
 
-<<<<<<< before updating
-#********** Checkov Analysis *************
-echo "Running Checkov Analysis"
-checkov --config-file ${PROJECT_PATH}/.config/.checkov.yml
-=======
 #********** Post-entrypoint helper *************
 post_entrypoint
->>>>>>> after updating
 
 #********** Exit Code *************
 exit $EXIT_CODE
