@@ -6,15 +6,27 @@ PROJECT_PATH=${BASE_PATH}/project
 PROJECT_TYPE_PATH=${BASE_PATH}/projecttype
 
 echo "Starting Functional Tests"
-
-#********** Terratest execution **********
 cd ${PROJECT_PATH}
-echo "Running Terratest"
-cd test
-rm -f go.mod
-go mod init github.com/aws-ia/terraform-project-ephemeral
-go mod tidy
-go install github.com/gruntwork-io/terratest/modules/terraform
-go test -timeout 45m
+
+#********** Terraform Test **********
+
+# Look up the mandatory test file
+MANDATORY_TEST_PATH="./tests/01_mandatory.tftest.hcl"
+if test -f ${MANDATORY_TEST_PATH}; then
+    echo "File ${MANDATORY_TEST_PATH} is found, resuming test"
+    # Run Terraform test
+    terraform init
+    terraform test
+else
+    echo "File ${MANDATORY_TEST_PATH} not found. You must include at least one test run in file ${MANDATORY_TEST_PATH}"
+    (exit 1)
+fi 
+
+if [ $? -eq 0 ]; then
+    echo "Terraform Test Successfull"
+else
+    echo "Terraform Test Failed"
+    exit 1
+fi
 
 echo "End of Functional Tests"
