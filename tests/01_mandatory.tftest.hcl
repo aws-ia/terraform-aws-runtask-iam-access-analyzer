@@ -6,13 +6,13 @@
 run "mandatory_plan_basic" {
   command = plan
   module {
-    source = "./examples/basic"
+    source = "./examples/module_workspace"
   }
 }
 
 run "mandatory_apply_basic" {
   command = apply
   module {
-    source = "./examples/basic"
+    source = "./examples/module_workspace"
   }
 }
