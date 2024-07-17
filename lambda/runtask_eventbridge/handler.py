@@ -102,7 +102,7 @@ def lambda_handler(event, _context):
                         str(response['Entries'][0]), headers)
             return {'statusCode': 500, 'body': 'FailedEntry Error - The entry could not be succesfully forwarded to Amazon EventBridge'}
 
-        return {'statusCode': 202, 'body': 'Message forwarded to Amazon EventBridge'}
+        return {'statusCode': 200, 'body': 'Message forwarded to Amazon EventBridge'}
 
     except PutEventError as err:
         print_error(f'500 Put Events Error - {err}', headers)
