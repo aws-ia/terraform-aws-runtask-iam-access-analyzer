@@ -1,6 +1,6 @@
 terraform {
   cloud {
-    # TODO: Change this to your Terraform Cloud org name.
+    # TODO: Change this to your HCP Terraform org name.
     organization = "wellsiau-org"
     workspaces {
       name = "runtasks"

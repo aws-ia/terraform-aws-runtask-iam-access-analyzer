@@ -1,7 +1,7 @@
 terraform {
 
   cloud {
-    # TODO: Change this to your Terraform Cloud org name.
+    # TODO: Change this to your HCP Terraform org name.
     organization = "my-sample-org"
     workspaces {
       tags = ["app:aws-access-analyzer-demo"]

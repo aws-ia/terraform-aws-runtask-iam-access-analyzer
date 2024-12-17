@@ -69,7 +69,7 @@ def lambda_handler(event, context):
     try:
         if not iamConfigMap: load_config("default.yaml") # load the config file
 
-        # Get plan output from Terraform Cloud
+        # Get plan output from HCP Terraform
         endpoint = event["payload"]["detail"]["plan_json_api_url"]
         access_token = event["payload"]["detail"]["access_token"]
         headers = __build_standard_headers(access_token)

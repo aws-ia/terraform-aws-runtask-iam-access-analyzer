@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 # terraform-runtask-iam-access-analyzer
 
-Use this module to integrate Terraform Cloud Run Tasks with AWS IAM Access Analyzer for policy validation.
+Use this module to integrate HCP Terraform Run Tasks with AWS IAM Access Analyzer for policy validation.
 
 ![Diagram](./diagram/RunTask-EventBridge.png)
 
@@ -10,7 +10,7 @@ Use this module to integrate Terraform Cloud Run Tasks with AWS IAM Access Analy
 To use this module you need have the following:
 
 1. AWS account and credentials
-2. Terraform Cloud with Run Task entitlement (Business subscription or higher)
+2. HCP Terraform with Run Task entitlement (Business subscription or higher)
 
 ## Usage
 
@@ -20,9 +20,9 @@ To use this module you need have the following:
   make all
   ```
 
-* Refer to the [module\_workspace](./examples/module\_workspace/README.md) for steps to deploy this module in Terraform Cloud.
+* Refer to the [module\_workspace](./examples/module\_workspace/README.md) for steps to deploy this module in HCP Terraform.
 
-* After you deployed the [module\_workspace](./examples/module\_workspace/README.md), navigate to your Terraform Cloud organization, go to Organization Settings > Integrations > Run tasks to find the newly created Run Task.
+* After you deployed the [module\_workspace](./examples/module\_workspace/README.md), navigate to your HCP Terraform organization, go to Organization Settings > Integrations > Run tasks to find the newly created Run Task.
 
 * You can use this run task in any workspace where you have standard IAM resource policy document. Refer to the [demo\_workspace](./examples/demo\_workspace/README.md) for more details.
 
@@ -184,6 +184,6 @@ resource "aws_iam_policy" "policy" {
 | Name | Description |
 |------|-------------|
 | <a name="output_runtask_hmac"></a> [runtask\_hmac](#output\_runtask\_hmac) | HMAC key value, keep this sensitive data safe |
-| <a name="output_runtask_id"></a> [runtask\_id](#output\_runtask\_id) | The Run Tasks id configured in Terraform Cloud |
-| <a name="output_runtask_url"></a> [runtask\_url](#output\_runtask\_url) | The Run Tasks URL endpoint, you can use this to configure the Run Task setup in Terraform Cloud |
+| <a name="output_runtask_id"></a> [runtask\_id](#output\_runtask\_id) | The Run Tasks id configured in HCP Terraform |
+| <a name="output_runtask_url"></a> [runtask\_url](#output\_runtask\_url) | The Run Tasks URL endpoint, you can use this to configure the Run Task setup in HCP Terraform |
 <!-- END_TF_DOCS -->

@@ -1,7 +1,7 @@
 ################# RunTask EventBridge ##################
 resource "aws_lambda_function" "runtask_eventbridge" {
   function_name    = "${var.name_prefix}-runtask-eventbridge"
-  description      = "Terraform Cloud Run Task - EventBridge handler"
+  description      = "HCP Terraform Run Task - EventBridge handler"
   role             = aws_iam_role.runtask_eventbridge.arn
   source_code_hash = data.archive_file.runtask_eventbridge.output_base64sha256
   filename         = data.archive_file.runtask_eventbridge.output_path
@@ -50,7 +50,7 @@ resource "aws_cloudwatch_log_group" "runtask_eventbridge" {
 ################# RunTask Request ##################
 resource "aws_lambda_function" "runtask_request" {
   function_name    = "${var.name_prefix}-runtask-request"
-  description      = "Terraform Cloud Run Task - Request handler"
+  description      = "HCP Terraform Run Task - Request handler"
   role             = aws_iam_role.runtask_request.arn
   source_code_hash = data.archive_file.runtask_request.output_base64sha256
   filename         = data.archive_file.runtask_request.output_path
@@ -83,7 +83,7 @@ resource "aws_cloudwatch_log_group" "runtask_request" {
 ################# RunTask Callback ##################
 resource "aws_lambda_function" "runtask_callback" {
   function_name    = "${var.name_prefix}-runtask-callback"
-  description      = "Terraform Cloud Run Task - Callback handler"
+  description      = "HCP Terraform Run Task - Callback handler"
   role             = aws_iam_role.runtask_callback.arn
   source_code_hash = data.archive_file.runtask_callback.output_base64sha256
   filename         = data.archive_file.runtask_callback.output_path
@@ -108,7 +108,7 @@ resource "aws_cloudwatch_log_group" "runtask_callback" {
 ################# RunTask Fulfillment ##################
 resource "aws_lambda_function" "runtask_fulfillment" {
   function_name    = "${var.name_prefix}-runtask-fulfillment"
-  description      = "Terraform Cloud Run Task - Fulfillment handler"
+  description      = "HCP Terraform Run Task - Fulfillment handler"
   role             = aws_iam_role.runtask_fulfillment.arn
   source_code_hash = data.archive_file.runtask_fulfillment.output_base64sha256
   filename         = data.archive_file.runtask_fulfillment.output_path

@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 # Usage Example
 
-First step is to deploy the module into dedicated Terraform Cloud workspace. The output `runtask_id` is used on other Terraform Cloud workspace to configure the runtask.
+First step is to deploy the module into dedicated HCP Terraform workspace. The output `runtask_id` is used on other HCP Terraform workspace to configure the runtask.
 
 * Build and package the Lambda files using the makefile. Run this command from the root directory of this repository.
   ```bash
@@ -20,7 +20,7 @@ First step is to deploy the module into dedicated Terraform Cloud workspace. The
   terraform {
 
     cloud {
-      # TODO: Change this to your Terraform Cloud org name.
+      # TODO: Change this to your HCP Terraform org name.
       organization = "<enter your org name here>"
       workspaces {
         ...
@@ -30,16 +30,16 @@ First step is to deploy the module into dedicated Terraform Cloud workspace. The
   }   
   ```
 
-* Initialize Terraform Cloud. When prompted, enter a new workspace name, i.e. `aws-ia2-infra`
+* Initialize HCP Terraform. When prompted, enter a new workspace name, i.e. `aws-ia2-infra`
   ```bash
   terraform init
   ```
 
-* Configure the new workspace (i.e `aws-ia2-infra`) in Terraform Cloud to use `local` execution mode. Skip this if you publish the module into Terraform registry.
+* Configure the new workspace (i.e `aws-ia2-infra`) in HCP Terraform to use `local` execution mode. Skip this if you publish the module into Terraform registry.
 
 * Configure the AWS credentials (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) by using environment variables.
 
-* In order to create and configure the run tasks, you also need to have Terraform Cloud token stored as Environment Variables. Add `TFE_HOSTNAME` and `TFE_TOKEN` environment variable.
+* In order to create and configure the run tasks, you also need to have HCP Terraform token stored as Environment Variables. Add `TFE_HOSTNAME` and `TFE_TOKEN` environment variable.
 
 * Run Terraform apply
   ```bash
