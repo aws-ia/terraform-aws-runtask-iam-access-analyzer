@@ -10,10 +10,10 @@ resource "aws_lambda_function" "runtask_eventbridge" {
   timeout          = local.lambda_default_timeout
   environment {
     variables = {
-      TFC_HMAC_SECRET_ARN = aws_secretsmanager_secret.runtask_hmac.arn
-      TFC_USE_WAF         = var.deploy_waf ? "True" : "False"
-      TFC_CF_SECRET_ARN   = var.deploy_waf ? aws_secretsmanager_secret.runtask_cloudfront[0].arn : null
-      TFC_CF_SIGNATURE    = var.deploy_waf ? local.cloudfront_sig_name : null
+      HCP_TF_HMAC_SECRET_ARN = aws_secretsmanager_secret.runtask_hmac.arn
+      HCP_TF_USE_WAF         = var.deploy_waf ? "True" : "False"
+      HCP_TF_CF_SECRET_ARN   = var.deploy_waf ? aws_secretsmanager_secret.runtask_cloudfront[0].arn : null
+      HCP_TF_CF_SIGNATURE    = var.deploy_waf ? local.cloudfront_sig_name : null
       EVENT_BUS_NAME      = var.event_bus_name
     }
   }
@@ -63,7 +63,7 @@ resource "aws_lambda_function" "runtask_request" {
   reserved_concurrent_executions = local.lambda_reserved_concurrency
   environment {
     variables = {
-      TFC_ORG          = var.tfc_org
+      HCP_TF_ORG          = var.tfc_org
       RUNTASK_STAGES   = join(",", var.runtask_stages)
       WORKSPACE_PREFIX = length(var.workspace_prefix) > 0 ? var.workspace_prefix : null
     }
