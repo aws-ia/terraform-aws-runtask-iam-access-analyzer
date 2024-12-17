@@ -29,8 +29,16 @@ resource "aws_lambda_function" "runtask_eventbridge" {
 
 resource "aws_lambda_function_url" "runtask_eventbridge" {
   function_name      = aws_lambda_function.runtask_eventbridge.function_name
-  authorization_type = "NONE"
-  #checkov:skip=CKV_AWS_258:auth set to none, validation hmac inside the lambda code
+  authorization_type = "AWS_IAM"
+}
+
+resource "aws_lambda_permission" "runtask_eventbridge" {
+  count         = local.waf_deployment
+  statement_id  = "AllowCloudFrontToFunctionUrl"
+  action        = "lambda:InvokeFunctionUrl"
+  function_name = aws_lambda_function.runtask_eventbridge.function_name
+  principal     = "cloudfront.amazonaws.com"
+  source_arn    = module.runtask_cloudfront[count.index].cloudfront_distribution_arn
 }
 
 resource "aws_cloudwatch_log_group" "runtask_eventbridge" {
@@ -133,4 +141,25 @@ resource "aws_cloudwatch_log_group" "runtask_fulfillment_output" {
   name              = local.cloudwatch_log_group_name
   retention_in_days = var.cloudwatch_log_group_retention
   kms_key_id        = aws_kms_key.runtask_key.arn
+}
+
+
+################# Run task Edge ##################
+resource "aws_lambda_function" "runtask_edge" {
+  provider                       = aws.cloudfront_waf # Lambda@Edge must be in us-east-1
+  function_name                  = "${var.name_prefix}-runtask-edge"
+  description                    = "HCP Terraform run task - Lambda@Edge handler"
+  role                           = aws_iam_role.runtask_edge.arn
+  source_code_hash               = data.archive_file.runtask_edge.output_base64sha256
+  filename                       = data.archive_file.runtask_edge.output_path
+  handler                        = "handler.lambda_handler"
+  runtime                        = local.lambda_python_runtime
+  timeout                        = 5 # Lambda@Edge max timout is 5
+  reserved_concurrent_executions = local.lambda_reserved_concurrency
+  publish                        = true # Lambda@Edge must be published
+  #checkov:skip=CKV_AWS_116:not using DLQ
+  #checkov:skip=CKV_AWS_117:VPC is not required
+  #checkov:skip=CKV_AWS_173:no sensitive data in env var
+  #checkov:skip=CKV_AWS_272:skip code-signing
+  #checkov:skip=CKV_AWS_50:no x-ray for lambda@edge
 }

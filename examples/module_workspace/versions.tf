@@ -3,7 +3,7 @@ terraform {
     # TODO: Change this to your Terraform Cloud org name.
     organization = "wellsiau-org"
     workspaces {
-      name = "TestExamplesLaunchModule"
+      name = "runtasks"
     }
   }
 
@@ -11,7 +11,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 3.73.0, < 5.0.0"
+      # version = " 5.0.0"
     }
 
     tfe = {

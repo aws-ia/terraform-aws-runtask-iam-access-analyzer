@@ -36,6 +36,13 @@ data "archive_file" "runtask_callback" {
   output_path = "${path.module}/lambda/runtask_callback.zip"
 }
 
+data "archive_file" "runtask_edge" {
+  type        = "zip"
+  source_dir  = "${path.module}/lambda/runtask_edge/site-packages"
+  output_path = "${path.module}/lambda/runtask_edge.zip"
+}
+
+
 data "aws_iam_policy_document" "runtask_key" {
   #checkov:skip=CKV_AWS_109:Skip
   #checkov:skip=CKV_AWS_111:Skip

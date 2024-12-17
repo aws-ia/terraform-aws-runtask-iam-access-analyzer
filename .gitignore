@@ -40,3 +40,12 @@ terraform.rc
 
 go.mod
 go.sum
+
+
+**/site-packages
+*.zip
+settings.json
+TODO.md
+.DS_Store
+.idea
+.venv

@@ -1,3 +1,16 @@
+################# IAM for run task Lambda@Edge ##################
+resource "aws_iam_role" "runtask_edge" {
+  name               = "${var.name_prefix}-runtask-edge"
+  assume_role_policy = templatefile("${path.module}/iam/trust-policies/lambda_edge.tpl", { none = "none" })
+}
+
+resource "aws_iam_role_policy_attachment" "runtask_edge" {
+  count      = length(local.lambda_managed_policies)
+  role       = aws_iam_role.runtask_edge.name
+  policy_arn = local.lambda_managed_policies[count.index]
+}
+
+
 ################# RunTask EventBridge ##################
 resource "aws_iam_role" "runtask_eventbridge" {
   name               = "${var.name_prefix}-runtask-eventbridge"
