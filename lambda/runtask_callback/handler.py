@@ -20,19 +20,14 @@ import os
 import re
 from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
 
 logger = logging.getLogger()
-if 'log_level' in os.environ:
-    logger.setLevel(os.environ['log_level'])
-    logger.info("Log level set to %s" % logger.getEffectiveLevel())
-else:
-    logger.setLevel(logging.INFO)
+log_level = os.environ.get("log_level", logging.INFO)
 
-if "TFC_HOST_NAME" in os.environ:
-    TFC_HOST_NAME = os.environ["TFC_HOST_NAME"]
-else:
-    TFC_HOST_NAME = "app.terraform.io"
+logger.setLevel(log_level)
+logger.info("Log level set to %s" % logger.getEffectiveLevel())
+
+HCP_TF_HOST_NAME = os.environ.get("HCP_TF_HOST_NAME", "app.terraform.io")
 
 def lambda_handler(event, context):
     logger.debug(json.dumps(event))
@@ -46,7 +41,7 @@ def lambda_handler(event, context):
                 "data": {
                     "attributes": {
                         "status": "failed",
-                        "message": "Verification failed, check TFC org, workspace prefix or Runtasks stage",
+                        "message": "Verification failed, check HCP Terraform org, workspace prefix or Runtasks stage",
                     },
                     "type": "task-results",
                 }        
@@ -71,12 +66,12 @@ def lambda_handler(event, context):
         
         logger.info("Payload : {}".format(json.dumps(payload)))
 
-        # Send runtask callback response to TFC 
+        # Send runtask callback response to HCP Terraform 
         endpoint = event["payload"]["detail"]["task_result_callback_url"]
         access_token = event["payload"]["detail"]["access_token"]
         headers = __build_standard_headers(access_token)
         response = __patch(endpoint, headers, bytes(json.dumps(payload), encoding="utf-8"))
-        logger.debug("TFC response: {}".format(response))
+        logger.debug("HCP Terraform response: {}".format(response))
         return "completed"
   
     except Exception as e:
@@ -96,7 +91,7 @@ def __patch(endpoint, headers, payload):
             with urlopen(request, timeout=10) as response: #nosec URL validation 
                 return response.read(), response
         else:
-            raise URLError("Invalid endpoint URL, expected host is: {}".format(TFC_HOST_NAME))
+            raise URLError("Invalid endpoint URL, expected host is: {}".format(HCP_TF_HOST_NAME))
     except HTTPError as error:
         logger.error(error.status, error.reason)
     except URLError as error:
@@ -105,6 +100,6 @@ def __patch(endpoint, headers, payload):
         logger.error("Request timed out")
 
 def validate_endpoint(endpoint): # validate that the endpoint hostname is valid
-    pattern = "^https:\/\/" + str(TFC_HOST_NAME).replace(".", "\.") + "\/"+ ".*"    
+    pattern = "^https:\/\/" + str(HCP_TF_HOST_NAME).replace(".", "\.") + "\/"+ ".*"    
     result = re.match(pattern, endpoint)
     return result
