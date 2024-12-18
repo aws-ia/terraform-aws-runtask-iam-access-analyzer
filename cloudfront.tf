@@ -92,3 +92,10 @@ resource "aws_cloudfront_origin_request_policy" "runtask_cloudfront" {
     query_string_behavior = "all"
   }
 }
+
+resource "time_sleep" "wait_1800_seconds" {
+  # wait for CloudFront Lambda@Edge removal that can take up to 30 mins / 1800s
+  # before deleting the Lambda function
+  depends_on       = [aws_lambda_function.runtask_edge]
+  destroy_duration = "1800s"
+}
