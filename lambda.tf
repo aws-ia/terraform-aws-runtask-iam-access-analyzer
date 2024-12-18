@@ -68,9 +68,10 @@ resource "aws_lambda_function" "runtask_request" {
   reserved_concurrent_executions = local.lambda_reserved_concurrency
   environment {
     variables = {
-      HCP_TF_ORG       = var.tfc_org
-      RUNTASK_STAGES   = join(",", var.runtask_stages)
-      WORKSPACE_PREFIX = length(var.workspace_prefix) > 0 ? var.workspace_prefix : null
+      HCP_TF_ORG             = var.tfc_org
+      RUNTASK_STAGES         = join(",", var.runtask_stages)
+      WORKSPACE_PREFIX       = length(var.workspace_prefix) > 0 ? var.workspace_prefix : null
+      EVENT_RULE_DETAIL_TYPE = local.solution_prefix # ensure uniqueness of event sent to each runtask state machine
     }
   }
   tags = var.tags
