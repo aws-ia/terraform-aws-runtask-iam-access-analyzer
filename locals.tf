@@ -14,4 +14,5 @@ locals {
     name  = local.cloudfront_sig_name
     value = var.deploy_waf ? aws_secretsmanager_secret_version.runtask_cloudfront[0].secret_string : null
   }
+
 }

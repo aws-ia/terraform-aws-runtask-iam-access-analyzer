@@ -6,7 +6,7 @@ resource "aws_cloudwatch_event_rule" "runtask_rule" {
     var_event_source   = var.event_source
     var_runtask_stages = jsonencode(var.runtask_stages)
   })
-
+  tags = var.tags
 }
 
 resource "aws_cloudwatch_event_target" "runtask_target" {

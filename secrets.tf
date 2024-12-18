@@ -5,6 +5,7 @@ resource "aws_secretsmanager_secret" "runtask_hmac" {
   name                    = "${var.name_prefix}-runtask-hmac"
   recovery_window_in_days = var.recovery_window
   kms_key_id              = aws_kms_key.runtask_key.arn
+  tags                    = var.tags
 }
 
 resource "aws_secretsmanager_secret_version" "runtask_hmac" {
@@ -22,6 +23,7 @@ resource "aws_secretsmanager_secret" "runtask_cloudfront" {
   name                    = "${var.name_prefix}-runtask_cloudfront"
   recovery_window_in_days = var.recovery_window
   kms_key_id              = aws_kms_key.runtask_key.arn
+  tags                    = var.tags
 }
 
 resource "aws_secretsmanager_secret_version" "runtask_cloudfront" {

@@ -44,7 +44,7 @@ Follow the steps below to attach the run task created from the module into a new
   terraform init
   ```
 
-* Configure the AWS credentials (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) in HCP Terraform, i.e. using variable sets. [Follow these instructions to learn more](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-create-variable-set).
+* We recommend configuring dynamic credentials to provision to AWS from your HCP Terraform workspace or organization. [Follow these instructions to leane more.](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/dynamic-provider-credentials/aws-configuration)
 
 * In order to create and configure the run tasks, you also need to have HCP Terraform token stored as Variable/Variable Sets in the workspace. Add `TFE_HOSTNAME` and `TFE_TOKEN` environment variable to the same variable set or directly on the workspace. ![TFC Configure Variable Set](../diagram/TerraformCloud-VariableSets.png?raw=true "Configure HCP Terraform Variable Set")
 

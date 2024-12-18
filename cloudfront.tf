@@ -1,4 +1,5 @@
 module "runtask_cloudfront" {
+  depends_on = [time_sleep.wait_1800_seconds]
   #checkov:skip=CKV2_AWS_42:custom domain name is optional
 
   count   = local.waf_deployment
@@ -65,6 +66,7 @@ module "runtask_cloudfront" {
     cloudfront_default_certificate = true
     minimum_protocol_version       = "TLSv1.2_2021"
   }
+  tags = var.tags
 }
 
 resource "aws_cloudfront_origin_request_policy" "runtask_cloudfront" {
