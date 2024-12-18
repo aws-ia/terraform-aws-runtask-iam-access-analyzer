@@ -16,6 +16,7 @@ resource "aws_lambda_function" "runtask_eventbridge" {
       HCP_TF_CF_SECRET_ARN   = var.deploy_waf ? aws_secretsmanager_secret.runtask_cloudfront[0].arn : null
       HCP_TF_CF_SIGNATURE    = var.deploy_waf ? local.cloudfront_sig_name : null
       EVENT_BUS_NAME         = var.event_bus_name
+      EVENT_RULE_DETAIL_TYPE = local.solution_prefix # ensure uniqueness of event sent to each runtask state machine
     }
   }
   tracing_config {
@@ -162,7 +163,7 @@ resource "aws_lambda_function" "runtask_edge" {
   function_name                  = "${var.name_prefix}-runtask-edge"
   description                    = "HCP Terraform run task - Lambda@Edge handler"
   role                           = aws_iam_role.runtask_edge.arn
-  architectures    = local.lambda_architecture
+  architectures                  = local.lambda_architecture
   source_code_hash               = data.archive_file.runtask_edge.output_base64sha256
   filename                       = data.archive_file.runtask_edge.output_path
   handler                        = "handler.lambda_handler"
