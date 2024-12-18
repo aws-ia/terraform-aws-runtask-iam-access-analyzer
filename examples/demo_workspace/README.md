@@ -15,7 +15,7 @@ Follow the steps below to attach the run task created from the module into a new
 
 * Change the org name in with your own HCP Terraform org name.
 
-  ```
+  ```hcl
   terraform {
 
     cloud {
@@ -26,10 +26,11 @@ Follow the steps below to attach the run task created from the module into a new
       }
     }
     ...
-  }   
+  }
   ```
 
 * Populate the required variables, change the placeholder value below.
+
   ```bash
   echo 'tfc_org="<enter your org name here>"' >> tf.auto.tfvars
   echo 'aws_region="<enter the AWS region here>"' >> tf.auto.tfvars
@@ -38,54 +39,55 @@ Follow the steps below to attach the run task created from the module into a new
   ```
 
 * Initialize HCP Terraform. When prompted, enter the name of the new demo workspace as you specified in the previous step.
+
   ```bash
   terraform init
   ```
 
 * Configure the AWS credentials (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) in HCP Terraform, i.e. using variable sets. [Follow these instructions to learn more](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-create-variable-set).
 
-* In order to create and configure the run tasks, you also need to have HCP Terraform token stored as Variable/Variable Sets in the workspace. Add `TFE_HOSTNAME` and `TFE_TOKEN` environment variable to the same variable set or directly on the workspace.
-![TFC Configure Variable Set](../diagram/TerraformCloud-VariableSets.png?raw=true "Configure HCP Terraform Variable Set")
+* In order to create and configure the run tasks, you also need to have HCP Terraform token stored as Variable/Variable Sets in the workspace. Add `TFE_HOSTNAME` and `TFE_TOKEN` environment variable to the same variable set or directly on the workspace. ![TFC Configure Variable Set](../diagram/TerraformCloud-VariableSets.png?raw=true "Configure HCP Terraform Variable Set")
 
- * Enable the flag to attach the run task to the demo workspace.
+* Enable the flag to attach the run task to the demo workspace.
+
    ```bash
    echo 'flag_attach_runtask="true"' >> tf.auto.tfvars
    terraform apply
    ```
 
-* Navigate back to HCP Terraform, locate the new demo workspace and confirm that the Run Task is attached to the demo workspace.
-![TFC Run Task in Workspace](../../diagram/TerraformCloud-RunTaskWorkspace.png?raw=true "Run Task attached to the demo workspace")
+* Navigate back to HCP Terraform, locate the new demo workspace and confirm that the Run Task is attached to the demo workspace. ![TFC Run Task in Workspace](../../diagram/TerraformCloud-RunTaskWorkspace.png?raw=true "Run Task attached to the demo workspace")
 
 ## Test IAM Access Analyzer using Run Task
 
 The following steps deploy simple IAM policy with invalid permissions. This should trigger the Run Task to send failure and stop the apply.
 
 * Enable the flag to deploy invalid IAM policy to the demo workspace.
+
   ```bash
   echo 'flag_deploy_invalid_resource="true"' >> tf.auto.tfvars
   ```
 
 * Run Terraform apply again
+
   ```bash
   terraform apply
   ```
 
-* Terraform apply will fail due to several errors, use the CloudWatch link to review the errors.
-![TFC Run Task results](../../diagram/TerraformCloud-RunTaskOutput.png?raw=true "Run Task output with IAM Access Analyzer validation")
+* Terraform apply will fail due to several errors, use the CloudWatch link to review the errors. ![TFC Run Task results](../../diagram/TerraformCloud-RunTaskOutput.png?raw=true "Run Task output with IAM Access Analyzer validation")
 
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.7 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.73.0, < 5.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >=5.72.0 |
 | <a name="requirement_tfe"></a> [tfe](#requirement\_tfe) | ~>0.38.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.73.0, < 5.0.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >=5.72.0 |
 | <a name="provider_tfe"></a> [tfe](#provider\_tfe) | ~>0.38.0 |
 
 ## Modules

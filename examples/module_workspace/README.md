@@ -4,6 +4,7 @@
 First step is to deploy the module into dedicated HCP Terraform workspace. The output `runtask_id` is used on other HCP Terraform workspace to configure the runtask.
 
 * Build and package the Lambda files using the makefile. Run this command from the root directory of this repository.
+
   ```bash
   make all
   ```
@@ -16,7 +17,7 @@ First step is to deploy the module into dedicated HCP Terraform workspace. The o
 
 * Change the org name to your TFC org.
 
-  ```
+  ```hcl
   terraform {
 
     cloud {
@@ -27,10 +28,11 @@ First step is to deploy the module into dedicated HCP Terraform workspace. The o
       }
     }
     ...
-  }   
+  }
   ```
 
 * Initialize HCP Terraform. When prompted, enter a new workspace name, i.e. `aws-ia2-infra`
+
   ```bash
   terraform init
   ```
@@ -42,6 +44,7 @@ First step is to deploy the module into dedicated HCP Terraform workspace. The o
 * In order to create and configure the run tasks, you also need to have HCP Terraform token stored as Environment Variables. Add `TFE_HOSTNAME` and `TFE_TOKEN` environment variable.
 
 * Run Terraform apply
+
   ```bash
   terraform apply
   ```
@@ -54,7 +57,7 @@ First step is to deploy the module into dedicated HCP Terraform workspace. The o
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.7 |
 | <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~>2.2.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.73.0, < 5.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >=5.72.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >=3.4.0 |
 | <a name="requirement_tfe"></a> [tfe](#requirement\_tfe) | ~>0.38.0 |
 
@@ -62,7 +65,7 @@ First step is to deploy the module into dedicated HCP Terraform workspace. The o
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.73.0, < 5.0.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >=5.72.0 |
 
 ## Modules
 
