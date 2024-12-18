@@ -1,9 +1,10 @@
 module "runtask_cloudfront" {
+  depends_on = [time_sleep.wait_1800_seconds]
   #checkov:skip=CKV2_AWS_42:custom domain name is optional
 
   count   = local.waf_deployment
   source  = "terraform-aws-modules/cloudfront/aws"
-  version = "3.2.1"
+  version = "3.4.0"
 
   comment             = "CloudFront for RunTask integration: ${var.name_prefix}"
   enabled             = true
@@ -12,6 +13,16 @@ module "runtask_cloudfront" {
   wait_for_deployment = true
   web_acl_id          = aws_wafv2_web_acl.runtask_waf[count.index].arn
 
+  create_origin_access_control = true
+  origin_access_control = {
+    lambda_oac_access_analyzer = {
+      description      = "CloudFront OAC to Lambda AWS-IA Access Analyzer"
+      origin_type      = "lambda"
+      signing_behavior = "always"
+      signing_protocol = "sigv4"
+    }
+  }
+
   origin = {
     runtask_eventbridge = {
       domain_name = split("/", aws_lambda_function_url.runtask_eventbridge.function_url)[2]
@@ -19,16 +30,17 @@ module "runtask_cloudfront" {
         http_port              = 80
         https_port             = 443
         origin_protocol_policy = "https-only"
-        origin_ssl_protocols   = ["TLSv1.2"]
+        origin_ssl_protocols   = ["TLSv1"]
       }
-      custom_header = var.deploy_waf ? [local.cloudfront_custom_header] : null
+      origin_access_control = "lambda_oac_access_analyzer"
+      custom_header         = var.deploy_waf ? [local.cloudfront_custom_header] : null
     }
   }
 
   default_cache_behavior = {
     target_origin_id       = "runtask_eventbridge"
     viewer_protocol_policy = "https-only"
-   
+
     #SecurityHeadersPolicy: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-response-headers-policies.html#managed-response-headers-policies-security
     response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03"
 
@@ -40,12 +52,21 @@ module "runtask_cloudfront" {
 
     allowed_methods = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods  = ["GET", "HEAD", "OPTIONS"]
+
+    lambda_function_association = {
+      # This function will append header x-amz-content-sha256 to allow OAC to authenticate with Lambda Function URL
+      viewer-request = {
+        lambda_arn   = aws_lambda_function.runtask_edge.qualified_arn
+        include_body = true
+      }
+    }
   }
 
   viewer_certificate = {
     cloudfront_default_certificate = true
-    minimum_protocol_version       = "TLSv1.2_2021"
+    minimum_protocol_version       = "TLSv1"
   }
+  tags = local.combined_tags
 }
 
 resource "aws_cloudfront_origin_request_policy" "runtask_cloudfront" {
@@ -72,4 +93,11 @@ resource "aws_cloudfront_origin_request_policy" "runtask_cloudfront" {
   query_strings_config {
     query_string_behavior = "all"
   }
+}
+
+resource "time_sleep" "wait_1800_seconds" {
+  # wait for CloudFront Lambda@Edge removal that can take up to 30 mins / 1800s
+  # before deleting the Lambda function
+  depends_on       = [aws_lambda_function.runtask_edge]
+  destroy_duration = "1800s"
 }

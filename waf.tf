@@ -62,6 +62,7 @@ resource "aws_wafv2_web_acl" "runtask_waf" {
     metric_name                = "${var.name_prefix}-runtask_waf_acl"
     sampled_requests_enabled   = true
   }
+  tags = local.combined_tags
 }
 
 resource "aws_cloudwatch_log_group" "runtask_waf" {
@@ -70,6 +71,14 @@ resource "aws_cloudwatch_log_group" "runtask_waf" {
   name              = "aws-waf-logs-${var.name_prefix}-runtask_waf_acl"
   retention_in_days = var.cloudwatch_log_group_retention
   kms_key_id        = aws_kms_key.runtask_waf[count.index].arn
+  tags              = local.combined_tags
+}
+
+resource "aws_cloudwatch_log_resource_policy" "runtask_waf" {
+  count           = local.waf_deployment
+  provider        = aws.cloudfront_waf
+  policy_document = data.aws_iam_policy_document.runtask_waf_log[count.index].json
+  policy_name     = "aws-waf-logs-${var.name_prefix}-runtask_waf_acl"
 }
 
 resource "aws_wafv2_web_acl_logging_configuration" "runtask_waf" {

@@ -36,6 +36,13 @@ data "archive_file" "runtask_callback" {
   output_path = "${path.module}/lambda/runtask_callback.zip"
 }
 
+data "archive_file" "runtask_edge" {
+  type        = "zip"
+  source_dir  = "${path.module}/lambda/runtask_edge/site-packages"
+  output_path = "${path.module}/lambda/runtask_edge.zip"
+}
+
+
 data "aws_iam_policy_document" "runtask_key" {
   #checkov:skip=CKV_AWS_109:Skip
   #checkov:skip=CKV_AWS_111:Skip
@@ -95,6 +102,7 @@ data "aws_iam_policy_document" "runtask_key" {
       values = [
         "arn:${data.aws_partition.current_partition.id}:logs:${data.aws_region.current_region.name}:${data.aws_caller_identity.current_account.account_id}:log-group:/aws/lambda/${var.name_prefix}*",
         "arn:${data.aws_partition.current_partition.id}:logs:${data.aws_region.current_region.name}:${data.aws_caller_identity.current_account.account_id}:log-group:/aws/state/${var.name_prefix}*",
+        "arn:${data.aws_partition.current_partition.id}:logs:${data.aws_region.current_region.name}:${data.aws_caller_identity.current_account.account_id}:log-group:/aws/vendedlogs/states/${var.name_prefix}*",
         "arn:${data.aws_partition.current_partition.id}:logs:${data.aws_region.current_region.name}:${data.aws_caller_identity.current_account.account_id}:log-group:${var.cloudwatch_log_group_name}*"
       ]
     }
@@ -197,6 +205,30 @@ data "aws_iam_policy_document" "runtask_waf" {
       values = [
         "arn:${data.aws_partition.current_partition.id}:logs:${data.aws_region.cloudfront_region.name}:${data.aws_caller_identity.current_account.account_id}:log-group:aws-waf-logs-${var.name_prefix}-runtask_waf_acl*"
       ]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "runtask_waf_log" {
+  count   = local.waf_deployment
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    principals {
+      identifiers = ["delivery.logs.amazonaws.com"]
+      type        = "Service"
+    }
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.runtask_waf[count.index].arn}:*"]
+    condition {
+      test     = "ArnLike"
+      values   = ["arn:aws:logs:${data.aws_region.cloudfront_region.name}:${data.aws_caller_identity.current_account.account_id}:*"]
+      variable = "aws:SourceArn"
+    }
+    condition {
+      test     = "StringEquals"
+      values   = [tostring(data.aws_caller_identity.current_account.account_id)]
+      variable = "aws:SourceAccount"
     }
   }
 }

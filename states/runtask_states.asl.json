@@ -1,5 +1,5 @@
 {
-  "Comment": "Terraform Cloud - Run Task Handler Demo",
+  "Comment": "HCP Terraform - Run Task Handler Demo",
   "StartAt": "runtask_request",
   "States": {
     "runtask_request": {

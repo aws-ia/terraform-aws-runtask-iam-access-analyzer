@@ -7,7 +7,7 @@ resource "tfe_workspace_run_task" "aws-iam-analyzer-attach" {
   workspace_id      = data.tfe_workspace.workspace.id
   task_id           = var.runtask_id
   enforcement_level = var.runtask_enforcement_level
-  stage             = var.runtask_stage
+  stages            = [var.runtask_stage]
 }
 
 # ==========================================================================

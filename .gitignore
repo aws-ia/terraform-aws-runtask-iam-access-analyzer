@@ -18,6 +18,7 @@ crash.log
 # to change depending on the environment.
 #
 ./*.tfvars
+*.tfvars
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
@@ -40,3 +41,12 @@ terraform.rc
 
 go.mod
 go.sum
+
+
+**/site-packages
+*.zip
+settings.json
+TODO.md
+.DS_Store
+.idea
+.venv

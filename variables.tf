@@ -120,3 +120,19 @@ variable "waf_managed_rule_set" {
     }
   ]
 }
+
+variable "tags" {
+  description = "Map of tags to apply to resources deployed by this solution."
+  type        = map(any)
+  default     = null
+}
+
+variable "lambda_architecture" {
+  description = "Lambda architecture (arm64 or x86_64)"
+  type        = string
+  default     = "x86_64"
+  validation {
+    condition     = contains(["arm64", "x86_64"], var.lambda_architecture)
+    error_message = "Valid values for var: lambda_architecture are arm64 or x86_64"
+  }
+}

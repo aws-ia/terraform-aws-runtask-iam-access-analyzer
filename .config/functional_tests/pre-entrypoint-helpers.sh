@@ -12,8 +12,8 @@ cd ${PROJECT_PATH}
 
 #********** TFC Env Vars *************
 export AWS_DEFAULT_REGION=us-east-1
-export TFE_TOKEN=`aws secretsmanager get-secret-value --secret-id abp/tfc/token | jq -r ".SecretString"`
-export TF_TOKEN_app_terraform_io=`aws secretsmanager get-secret-value --secret-id abp/tfc/token | jq -r ".SecretString"`
+export TFE_TOKEN=`aws secretsmanager get-secret-value --secret-id abp/hcp/token --region us-west-2 | jq -r ".SecretString"`
+export TF_TOKEN_app_terraform_io=`aws secretsmanager get-secret-value --secret-id abp/hcp/token --region us-west-2 | jq -r ".SecretString"`
 
 #********** MAKEFILE *************
 echo "Build the lambda function packages"
@@ -22,7 +22,7 @@ make all
 #********** Get tfvars from SSM *************
 echo "Get *.tfvars from SSM parameter"
 aws ssm get-parameter \
-  --name "/abp/tfc/functional/tfc_org/terraform_test.tfvars" \
+  --name "/abp/hcp/functional/terraform-aws-runtask-iam-access-analyzer/terraform_tests.tfvars" \
   --with-decryption \
   --query "Parameter.Value" \
   --output "text" \

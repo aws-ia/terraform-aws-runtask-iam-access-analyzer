@@ -34,21 +34,18 @@ logger = logging.getLogger()
 
 iamConfigMap = {} # map of terraform plan attribute and IAM access analyzer resource type, loaded from default.yaml
 
-if "log_level" in os.environ:
-    logger.setLevel(os.environ["log_level"])
-    logger.info("Log level set to %s" % logger.getEffectiveLevel())
-else:
-    logger.setLevel(logging.INFO)
+log_level = os.environ.get("log_level", logging.INFO)
+
+logger = logging.getLogger()
+logger.setLevel(log_level)
 
 if "SUPPORTED_POLICY_DOCUMENT" in os.environ:
     SUPPORTED_POLICY_DOCUMENT = os.environ["SUPPORTED_POLICY_DOCUMENT"]
 else:
     SUPPORTED_POLICY_DOCUMENT = False # default to False and then load it from config file default.yaml
 
-if "TFC_HOST_NAME" in os.environ:
-    TFC_HOST_NAME = os.environ["TFC_HOST_NAME"]
-else:
-    TFC_HOST_NAME = "app.terraform.io"
+HCP_TF_HOST_NAME = os.environ.get("HCP_TF_HOST_NAME", "app.terraform.io")
+
 
 IAM_ACCESS_ANALYZER_COUNTER = {
     "ERROR" : 0,
@@ -69,7 +66,7 @@ def lambda_handler(event, context):
     try:
         if not iamConfigMap: load_config("default.yaml") # load the config file
 
-        # Get plan output from Terraform Cloud
+        # Get plan output from HCP Terraform
         endpoint = event["payload"]["detail"]["plan_json_api_url"]
         access_token = event["payload"]["detail"]["access_token"]
         headers = __build_standard_headers(access_token)
@@ -95,7 +92,7 @@ def lambda_handler(event, context):
             fulfillment_response = fulfillment_response_helper(total_ia2_violation_count, skip_log = False) # generate response
         else:
             logger.info("No resource changes detected")
-            fulfillment_response = fulfillment_response_helper(total_ia2_violation_count = {}, skip_log = True, override_message = "No resource changes detected", overrise_status = "passed") # override response
+            fulfillment_response = fulfillment_response_helper(total_ia2_violation_count = {}, skip_log = True, override_message = "No resource changes detected", override_status = "passed") # override response
         
         return fulfillment_response
   
@@ -310,7 +307,7 @@ def __get(endpoint, headers): # HTTP request helper function
             with urlopen(request, timeout=10) as response: #nosec URL validation 
                 return response.read(), response
         else:
-            raise URLError("Invalid endpoint URL, expected host is: {}".format(TFC_HOST_NAME))
+            raise URLError("Invalid endpoint URL, expected host is: {}".format(HCP_TF_HOST_NAME))
     except HTTPError as error:
         logger.error(error.status, error.reason)
     except URLError as error:
@@ -319,7 +316,7 @@ def __get(endpoint, headers): # HTTP request helper function
         logger.error("Request timed out")
 
 def validate_endpoint(endpoint): # validate that the endpoint hostname is valid
-    pattern = "^https:\/\/" + str(TFC_HOST_NAME).replace(".", "\.") + "\/"+ ".*"    
+    pattern = "^https:\/\/" + str(HCP_TF_HOST_NAME).replace(".", "\.") + "\/"+ ".*"    
     result = re.match(pattern, endpoint)
     return result
 
