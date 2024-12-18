@@ -64,9 +64,9 @@ module "runtask_cloudfront" {
 
   viewer_certificate = {
     cloudfront_default_certificate = true
-    minimum_protocol_version       = "TLSv1.2_2021"
+    minimum_protocol_version       = "TLSv1"
   }
-  tags = var.tags
+  tags = local.combined_tags
 }
 
 resource "aws_cloudfront_origin_request_policy" "runtask_cloudfront" {

@@ -2,7 +2,7 @@ resource "aws_kms_key" "runtask_key" {
   description         = "KMS key for Run Task integration"
   policy              = data.aws_iam_policy_document.runtask_key.json
   enable_key_rotation = true
-  tags                = var.tags
+  tags                = local.combined_tags
 }
 
 # Assign an alias to the key
@@ -17,7 +17,7 @@ resource "aws_kms_key" "runtask_waf" {
   description         = "KMS key for WAF"
   policy              = data.aws_iam_policy_document.runtask_waf[count.index].json
   enable_key_rotation = true
-  tags                = var.tags
+  tags                = local.combined_tags
 }
 
 # Assign an alias to the key

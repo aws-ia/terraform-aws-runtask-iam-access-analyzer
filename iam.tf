@@ -2,7 +2,7 @@
 resource "aws_iam_role" "runtask_edge" {
   name               = "${var.name_prefix}-runtask-edge"
   assume_role_policy = templatefile("${path.module}/iam/trust-policies/lambda_edge.tpl", { none = "none" })
-  tags               = var.tags
+  tags               = local.combined_tags
 }
 
 resource "aws_iam_role_policy_attachment" "runtask_edge" {
@@ -16,7 +16,7 @@ resource "aws_iam_role_policy_attachment" "runtask_edge" {
 resource "aws_iam_role" "runtask_eventbridge" {
   name               = "${var.name_prefix}-runtask-eventbridge"
   assume_role_policy = templatefile("${path.module}/iam/trust-policies/lambda.tpl", { none = "none" })
-  tags               = var.tags
+  tags               = local.combined_tags
 }
 
 resource "aws_iam_role_policy_attachment" "runtask_eventbridge" {
@@ -41,7 +41,7 @@ resource "aws_iam_role_policy" "runtask_eventbridge" {
 resource "aws_iam_role" "runtask_request" {
   name               = "${var.name_prefix}-runtask-request"
   assume_role_policy = templatefile("${path.module}/iam/trust-policies/lambda.tpl", { none = "none" })
-  tags               = var.tags
+  tags               = local.combined_tags
 }
 
 resource "aws_iam_role_policy_attachment" "runtask_request" {
@@ -54,7 +54,7 @@ resource "aws_iam_role_policy_attachment" "runtask_request" {
 resource "aws_iam_role" "runtask_callback" {
   name               = "${var.name_prefix}-runtask-callback"
   assume_role_policy = templatefile("${path.module}/iam/trust-policies/lambda.tpl", { none = "none" })
-  tags               = var.tags
+  tags               = local.combined_tags
 }
 
 resource "aws_iam_role_policy_attachment" "runtask_callback" {
@@ -67,7 +67,7 @@ resource "aws_iam_role_policy_attachment" "runtask_callback" {
 resource "aws_iam_role" "runtask_fulfillment" {
   name               = "${var.name_prefix}-runtask-fulfillment"
   assume_role_policy = templatefile("${path.module}/iam/trust-policies/lambda.tpl", { none = "none" })
-  tags               = var.tags
+  tags               = local.combined_tags
 }
 
 resource "aws_iam_role_policy_attachment" "runtask_fulfillment" {
@@ -91,7 +91,7 @@ resource "aws_iam_role_policy" "runtask_fulfillment" {
 resource "aws_iam_role" "runtask_states" {
   name               = "${var.name_prefix}-runtask-statemachine"
   assume_role_policy = templatefile("${path.module}/iam/trust-policies/states.tpl", { none = "none" })
-  tags               = var.tags
+  tags               = local.combined_tags
 }
 
 resource "aws_iam_role_policy" "runtask_states" {
@@ -110,7 +110,7 @@ resource "aws_iam_role_policy" "runtask_states" {
 resource "aws_iam_role" "runtask_rule" {
   name               = "${var.name_prefix}-runtask-rule"
   assume_role_policy = templatefile("${path.module}/iam/trust-policies/events.tpl", { none = "none" })
-  tags               = var.tags
+  tags               = local.combined_tags
 }
 
 resource "aws_iam_role_policy" "runtask_rule" {

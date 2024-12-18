@@ -23,7 +23,7 @@ resource "aws_lambda_function" "runtask_eventbridge" {
     mode = "Active"
   }
   reserved_concurrent_executions = local.lambda_reserved_concurrency
-  tags                           = var.tags
+  tags                           = local.combined_tags
   #checkov:skip=CKV_AWS_116:not using DLQ
   #checkov:skip=CKV_AWS_117:VPC is not required
   #checkov:skip=CKV_AWS_173:non sensitive environment variables
@@ -48,7 +48,7 @@ resource "aws_cloudwatch_log_group" "runtask_eventbridge" {
   name              = "/aws/lambda/${aws_lambda_function.runtask_eventbridge.function_name}"
   retention_in_days = var.cloudwatch_log_group_retention
   kms_key_id        = aws_kms_key.runtask_key.arn
-  tags              = var.tags
+  tags              = local.combined_tags
 }
 
 ################# RunTask Request ##################
@@ -74,7 +74,7 @@ resource "aws_lambda_function" "runtask_request" {
       EVENT_RULE_DETAIL_TYPE = local.solution_prefix # ensure uniqueness of event sent to each runtask state machine
     }
   }
-  tags = var.tags
+  tags = local.combined_tags
   #checkov:skip=CKV_AWS_116:not using DLQ
   #checkov:skip=CKV_AWS_117:VPC is not required
   #checkov:skip=CKV_AWS_173:no sensitive data in env var
@@ -102,7 +102,7 @@ resource "aws_lambda_function" "runtask_callback" {
     mode = "Active"
   }
   reserved_concurrent_executions = local.lambda_reserved_concurrency
-  tags                           = var.tags
+  tags                           = local.combined_tags
   #checkov:skip=CKV_AWS_116:not using DLQ
   #checkov:skip=CKV_AWS_117:VPC is not required
   #checkov:skip=CKV_AWS_272:skip code-signing
@@ -112,7 +112,7 @@ resource "aws_cloudwatch_log_group" "runtask_callback" {
   name              = "/aws/lambda/${aws_lambda_function.runtask_callback.function_name}"
   retention_in_days = var.cloudwatch_log_group_retention
   kms_key_id        = aws_kms_key.runtask_key.arn
-  tags              = var.tags
+  tags              = local.combined_tags
 }
 
 ################# RunTask Fulfillment ##################
@@ -136,7 +136,7 @@ resource "aws_lambda_function" "runtask_fulfillment" {
       SUPPORTED_POLICY_DOCUMENT = length(var.supported_policy_document) > 0 ? var.supported_policy_document : null
     }
   }
-  tags = var.tags
+  tags = local.combined_tags
   #checkov:skip=CKV_AWS_116:not using DLQ
   #checkov:skip=CKV_AWS_117:VPC is not required
   #checkov:skip=CKV_AWS_173:no sensitive data in env var
@@ -147,14 +147,14 @@ resource "aws_cloudwatch_log_group" "runtask_fulfillment" {
   name              = "/aws/lambda/${aws_lambda_function.runtask_fulfillment.function_name}"
   retention_in_days = var.cloudwatch_log_group_retention
   kms_key_id        = aws_kms_key.runtask_key.arn
-  tags              = var.tags
+  tags              = local.combined_tags
 }
 
 resource "aws_cloudwatch_log_group" "runtask_fulfillment_output" {
   name              = local.cloudwatch_log_group_name
   retention_in_days = var.cloudwatch_log_group_retention
   kms_key_id        = aws_kms_key.runtask_key.arn
-  tags              = var.tags
+  tags              = local.combined_tags
 }
 
 
@@ -172,7 +172,7 @@ resource "aws_lambda_function" "runtask_edge" {
   timeout                        = 5 # Lambda@Edge max timout is 5
   reserved_concurrent_executions = local.lambda_reserved_concurrency
   publish                        = true # Lambda@Edge must be published
-  tags                           = var.tags
+  tags                           = local.combined_tags
   #checkov:skip=CKV_AWS_116:not using DLQ
   #checkov:skip=CKV_AWS_117:VPC is not required
   #checkov:skip=CKV_AWS_173:no sensitive data in env var

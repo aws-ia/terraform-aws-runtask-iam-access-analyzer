@@ -18,6 +18,13 @@ locals {
     value = var.deploy_waf ? aws_secretsmanager_secret_version.runtask_cloudfront[0].secret_string : null
   }
 
+  combined_tags = merge(
+    var.tags,
+    {
+      Solution = local.solution_prefix
+    }
+  )
+
 }
 
 resource "random_string" "solution_prefix" {

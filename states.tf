@@ -16,12 +16,12 @@ resource "aws_sfn_state_machine" "runtask_states" {
   tracing_configuration {
     enabled = true
   }
-  tags = var.tags
+  tags = local.combined_tags
 }
 
 resource "aws_cloudwatch_log_group" "runtask_states" {
   name              = "/aws/vendedlogs/states/${var.name_prefix}-runtask-statemachine"
   retention_in_days = var.cloudwatch_log_group_retention
   kms_key_id        = aws_kms_key.runtask_key.arn
-  tags              = var.tags
+  tags              = local.combined_tags
 }
