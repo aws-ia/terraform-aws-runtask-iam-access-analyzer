@@ -2,9 +2,11 @@ terraform {
 
   cloud {
     # TODO: Change this to your HCP Terraform org name.
-    organization = "my-sample-org"
+    organization = "wellsiau-org"
+
+    # OPTIONAL: Change the workspace name
     workspaces {
-      tags = ["app:aws-access-analyzer-demo"]
+      name = "AWS-Runtask-IAM-Access-Analyzer-Demo"
     }
   }
 
