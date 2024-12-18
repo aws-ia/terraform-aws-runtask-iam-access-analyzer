@@ -3,6 +3,7 @@ resource "aws_lambda_function" "runtask_eventbridge" {
   function_name    = "${var.name_prefix}-runtask-eventbridge"
   description      = "HCP Terraform Run Task - EventBridge handler"
   role             = aws_iam_role.runtask_eventbridge.arn
+  architectures    = local.lambda_architecture
   source_code_hash = data.archive_file.runtask_eventbridge.output_base64sha256
   filename         = data.archive_file.runtask_eventbridge.output_path
   handler          = "handler.lambda_handler"
@@ -54,6 +55,7 @@ resource "aws_lambda_function" "runtask_request" {
   function_name    = "${var.name_prefix}-runtask-request"
   description      = "HCP Terraform Run Task - Request handler"
   role             = aws_iam_role.runtask_request.arn
+  architectures    = local.lambda_architecture
   source_code_hash = data.archive_file.runtask_request.output_base64sha256
   filename         = data.archive_file.runtask_request.output_path
   handler          = "handler.lambda_handler"
@@ -88,6 +90,7 @@ resource "aws_lambda_function" "runtask_callback" {
   function_name    = "${var.name_prefix}-runtask-callback"
   description      = "HCP Terraform Run Task - Callback handler"
   role             = aws_iam_role.runtask_callback.arn
+  architectures    = local.lambda_architecture
   source_code_hash = data.archive_file.runtask_callback.output_base64sha256
   filename         = data.archive_file.runtask_callback.output_path
   handler          = "handler.lambda_handler"
@@ -115,6 +118,7 @@ resource "aws_lambda_function" "runtask_fulfillment" {
   function_name    = "${var.name_prefix}-runtask-fulfillment"
   description      = "HCP Terraform Run Task - Fulfillment handler"
   role             = aws_iam_role.runtask_fulfillment.arn
+  architectures    = local.lambda_architecture
   source_code_hash = data.archive_file.runtask_fulfillment.output_base64sha256
   filename         = data.archive_file.runtask_fulfillment.output_path
   handler          = "handler.lambda_handler"
@@ -158,6 +162,7 @@ resource "aws_lambda_function" "runtask_edge" {
   function_name                  = "${var.name_prefix}-runtask-edge"
   description                    = "HCP Terraform run task - Lambda@Edge handler"
   role                           = aws_iam_role.runtask_edge.arn
+  architectures    = local.lambda_architecture
   source_code_hash               = data.archive_file.runtask_edge.output_base64sha256
   filename                       = data.archive_file.runtask_edge.output_path
   handler                        = "handler.lambda_handler"
