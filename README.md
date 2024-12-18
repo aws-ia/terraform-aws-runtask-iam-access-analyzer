@@ -10,7 +10,7 @@ Use this module to integrate HCP Terraform Run Tasks with AWS IAM Access Analyze
 To use this module you need have the following:
 
 1. AWS account and credentials
-2. HCP Terraform with Run Task entitlement (Business subscription or higher)
+2. HCP Terraform with the right permissions to create a run task. Please review the [requirements](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/settings/run-tasks#requirements) from Terraform documentation.
 
 ## Usage
 
