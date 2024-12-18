@@ -22,7 +22,7 @@ make all
 #********** Get tfvars from SSM *************
 echo "Get *.tfvars from SSM parameter"
 aws ssm get-parameter \
-  --name "/abp/tfc/functional/tfc_org/terraform_test.tfvars" \
+  --name "/abp/hcp/functional/terraform-aws-runtask-iam-access-analyzer/terraform_tests.tfvars" \
   --with-decryption \
   --query "Parameter.Value" \
   --output "text" \
