@@ -3,7 +3,7 @@ terraform {
     # TODO: Change this to your HCP Terraform org name.
     organization = "wellsiau-org"
     workspaces {
-      name = "runtasks"
+      name = "TestExamplesLaunchModule"
     }
   }
 
@@ -11,7 +11,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      # version = " 5.0.0"
+      version = ">=5.72.0"
     }
 
     tfe = {
