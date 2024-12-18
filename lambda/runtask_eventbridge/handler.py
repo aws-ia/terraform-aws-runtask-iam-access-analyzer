@@ -15,7 +15,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
-"""HashiCorp HCP Terraform run task event handler implementation"""
+"""HCP Terraform run task event handler implementation"""
 
 import os
 import hmac

@@ -73,7 +73,7 @@ The following steps deploy simple IAM policy with invalid permissions. This shou
   terraform apply
   ```
 
-* Terraform apply will fail due to several errors, use the CloudWatch link to review the errors. ![TFC Run Task results](../../diagram/TerraformCloud-RunTaskOutput.png?raw=true "Run Task output with IAM Access Analyzer validation")
+* Terraform apply will fail due to several errors, use the CloudWatch link to review the errors. ![HCP TF Run Task results](../../diagram/TerraformCloud-RunTaskOutput.png?raw=true "Run Task output with IAM Access Analyzer validation")
 
 ## Requirements
 
