@@ -63,7 +63,7 @@ module "runtask_cloudfront" {
 
   viewer_certificate = {
     cloudfront_default_certificate = true
-    minimum_protocol_version       = "TLSv1.2"
+    minimum_protocol_version       = "TLSv1.2_2021"
   }
 }
 
