@@ -33,7 +33,7 @@ def lambda_handler(event, context):
     logger.debug(json.dumps(event))
     try:
         # trim empty url from the payload
-        if event["payload"]["result"]["fulfillment"]["url"] == False:
+        if "fulfillment" in event["payload"]["result"] and event["payload"]["result"]["fulfillment"]["url"] == False:
             event["payload"]["result"]["fulfillment"].pop("url")
 
         if event["payload"]["result"]["request"]["status"] == "unverified": # unverified runtask execution
