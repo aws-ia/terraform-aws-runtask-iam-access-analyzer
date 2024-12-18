@@ -19,7 +19,11 @@ terraform {
 
     tfe = {
       source  = "hashicorp/tfe"
-      version = "~>0.38.0"
+      version = ">=0.38.0"
     }
   }
+}
+
+provider "aws" {
+  region = var.aws_region
 }

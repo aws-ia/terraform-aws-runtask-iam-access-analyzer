@@ -81,7 +81,7 @@ resource "aws_iam_policy" "policy" {
 | <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~>2.2.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >=5.72.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >=3.4.0 |
-| <a name="requirement_tfe"></a> [tfe](#requirement\_tfe) | ~>0.38.0 |
+| <a name="requirement_tfe"></a> [tfe](#requirement\_tfe) | >=0.38.0 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | >=0.12.0 |
 
 ## Providers
@@ -92,7 +92,7 @@ resource "aws_iam_policy" "policy" {
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >=5.72.0 |
 | <a name="provider_aws.cloudfront_waf"></a> [aws.cloudfront\_waf](#provider\_aws.cloudfront\_waf) | >=5.72.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | >=3.4.0 |
-| <a name="provider_tfe"></a> [tfe](#provider\_tfe) | ~>0.38.0 |
+| <a name="provider_tfe"></a> [tfe](#provider\_tfe) | >=0.38.0 |
 | <a name="provider_time"></a> [time](#provider\_time) | >=0.12.0 |
 
 ## Modules

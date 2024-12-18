@@ -59,7 +59,7 @@ First step is to deploy the module into dedicated HCP Terraform workspace. The o
 | <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~>2.2.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >=5.72.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >=3.4.0 |
-| <a name="requirement_tfe"></a> [tfe](#requirement\_tfe) | ~>0.38.0 |
+| <a name="requirement_tfe"></a> [tfe](#requirement\_tfe) | >=0.38.0 |
 
 ## Providers
 

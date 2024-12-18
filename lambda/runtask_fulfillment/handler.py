@@ -92,7 +92,7 @@ def lambda_handler(event, context):
             fulfillment_response = fulfillment_response_helper(total_ia2_violation_count, skip_log = False) # generate response
         else:
             logger.info("No resource changes detected")
-            fulfillment_response = fulfillment_response_helper(total_ia2_violation_count = {}, skip_log = True, override_message = "No resource changes detected", overrise_status = "passed") # override response
+            fulfillment_response = fulfillment_response_helper(total_ia2_violation_count = {}, skip_log = True, override_message = "No resource changes detected", override_status = "passed") # override response
         
         return fulfillment_response
   
